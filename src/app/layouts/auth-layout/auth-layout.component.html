@@ -1,0 +1,67 @@
+<div class="grid lg:grid-cols-2 min-h-screen bg-[#f5f6f8] text-slate-900">
+  <!-- Left Side: Brand Imagery -->
+  <div class="hidden h-full lg:flex relative overflow-hidden via-[#e3e6ec] to-[#e3e6ec]">
+    <div
+      class="absolute inset-0 z-0 opacity-40 bg-cover bg-center bg-[url('../public/assets/images/signImage.png')]"
+    ></div>
+    <div
+      class="absolute inset-0 bg-linear-to-br from-mainColor via-[#256af4cc] to-transparent z-10"
+    ></div>
+
+    <div class="relative z-20 flex flex-col gap-20 p-16 w-full">
+      <!-- Logo -->
+      <div class="flex items-center gap-3 text-white">
+        <div
+          class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center"
+        >
+          <span class="material-symbols-outlined text-white text-2xl"
+            ><i class="fa-brands fa-hive"></i
+          ></span>
+        </div>
+        <h2 class="text-2xl font-bold tracking-tight">Nexora</h2>
+      </div>
+
+      <!-- Tagline -->
+      <div class="max-w-md">
+        <h1 class="text-5xl font-extrabold text-white leading-tight mb-6">
+          <span class="">Connect</span> with <span>your world</span>
+        </h1>
+        <p class="text-white/90 text-lg leading-relaxed mb-8">
+          Join over 10 million creators and thinkers, Share updates, discover new perspectives, and
+          build meaningful connections.
+        </p>
+        <!-- bottom -->
+        <div class="mt-12 z-10">
+          <ul class="flex items-center justify-between gap-5 text-white text-sm font-medium">
+            <li>
+              <div class="flex gap-2 items-center">
+                <i class="fa-solid fa-users text-2xl"></i>
+                <span class="text-2xl font-bold">2M+</span>
+              </div>
+              <p>Active Users</p>
+            </li>
+            <li>
+              <div class="flex gap-2 items-center">
+                <i class="fa-solid fa-heart text-2xl"></i>
+                <span class="text-2xl font-bold">10M+</span>
+              </div>
+              <p>Posts Shared</p>
+            </li>
+            <li>
+              <div class="flex gap-2 items-center">
+                <i class="fa-solid fa-message text-2xl"></i>
+                <span class="text-2xl font-bold">50M+</span>
+              </div>
+              <p>Messages Sent</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<!-- login / register / forgot password -->

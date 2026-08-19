@@ -1,0 +1,363 @@
+<!-- Right Side: Registration Form -->
+<div class="w-full h-full flex flex-col justify-center items-center p-8 lg:p-16 lg:py-7 bg-white">
+  <div class="w-full max-w-md">
+    <!-- Mobile Logo -->
+    <div class="lg:hidden mb-8 flex items-center gap-2">
+      <span class="text-mainColor text-3xl font-bold">
+        <i class="fa-brands fa-hive"></i>
+      </span>
+
+      <span class="text-xl font-bold text-slate-900"> Nexora </span>
+    </div>
+
+    <!-- Heading -->
+    <div class="mb-10">
+      <h2 class="text-3xl font-extrabold text-slate-900 mb-2 text-center">
+        Create Your New Account
+      </h2>
+
+      <p class="text-slate-500 text-center">Join Nexora and start connecting</p>
+    </div>
+
+    <!-- Form Design Only -->
+
+    <form autocomplete="off" [formGroup]="registerForm" (ngSubmit)="submitForm()" class="space-y-5">
+      <!-- Full Name -->
+      <div>
+        <div class="relative">
+          @let nameControl = registerForm.get('name');
+          <input
+            formControlName="name"
+            type="text"
+            id="fullName"
+            placeholder=" "
+            class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+            [class]="
+              nameControl?.invalid && nameControl?.touched
+                ? 'border-rose-600'
+                : 'border-default-medium'
+            "
+          />
+
+          <label
+            for="fullName"
+            class="absolute text-sm text-slate-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-white px-2 peer-focus:px-2 peer-focus:text-mainColor peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+          >
+            Full name
+          </label>
+        </div>
+        <!-- Error Alert -->
+        @if (nameControl?.invalid && nameControl?.touched) {
+          <p class="mt-1 text-xs font-semibold text-rose-600">
+            @if (nameControl?.hasError('required')) {
+              <span class="block">Full name is required.</span>
+            } @else if (nameControl?.hasError('minlength')) {
+              <span class="block">Name must be at least 3 characters.</span>
+            }
+          </p>
+        }
+      </div>
+
+      <!-- Username -->
+      <div>
+        <div class="relative">
+          <input
+            formControlName="username"
+            type="text"
+            id="userName"
+            placeholder=" "
+            class="block px-3 pb-2.5 pt-4 w-full text-sm text-slate-900 bg-transparent rounded-lg border border-slate-300 appearance-none focus:outline-none focus:ring-0 focus:border-mainColor peer"
+          />
+
+          <label
+            for="userName"
+            class="absolute text-sm text-slate-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-white px-2 peer-focus:px-2 peer-focus:text-mainColor peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+          >
+            Username (optional)
+          </label>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div>
+        <div class="relative">
+          @let emailControl = registerForm.get('email');
+
+          <input
+            autocomplete="off"
+            formControlName="email"
+            type="email"
+            id="email"
+            placeholder=" "
+            class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+            [class]="
+              emailControl?.invalid && emailControl?.touched
+                ? 'border-rose-600'
+                : 'border-slate-300'
+            "
+          />
+
+          <label
+            for="email"
+            class="absolute text-sm text-slate-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-white px-2 peer-focus:px-2 peer-focus:text-mainColor peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+          >
+            Email address
+          </label>
+        </div>
+        <!-- Error Alert -->
+        @if (emailControl?.invalid && emailControl?.touched) {
+          <p class="mt-1 text-xs font-semibold text-rose-600">
+            @if (emailControl?.hasError('required')) {
+              <span class="block">Email is required.</span>
+            } @else if (emailControl?.hasError('email')) {
+              <span class="block">Please enter a valid email address. </span>
+            }
+          </p>
+        }
+      </div>
+
+      <!-- Gender + Date Of Birth -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Gender -->
+        <div>
+          <div class="relative">
+            @let genderControl = registerForm.get('gender');
+
+            <select
+              formControlName="gender"
+              id="gender"
+              class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+              [class]="
+                genderControl?.invalid && genderControl?.touched
+                  ? 'border-rose-600'
+                  : 'border-slate-300'
+              "
+              placeholder=" "
+            >
+              <option selected hidden disabled value="">Select gender</option>
+
+              <option value="male">Male</option>
+
+              <option value="female">Female</option>
+            </select>
+
+            <label
+              for="gender"
+              class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto inset-s-1"
+              >Select gender</label
+            >
+          </div>
+          <!-- Error Alert -->
+          @if (genderControl?.invalid && genderControl?.touched) {
+            <p class="mt-1 text-xs font-semibold text-rose-600">
+              @if (genderControl?.hasError('required')) {
+                <span class="block">Gender is required.</span>
+              }
+            </p>
+          }
+        </div>
+
+        <!-- Date Of Birth -->
+        <div>
+          <div class="relative">
+            @let dateOfBirthControl = registerForm.get('dateOfBirth');
+
+            <input
+              formControlName="dateOfBirth"
+              type="date"
+              id="date"
+              class="block px-3 pb-2.5 pt-4 w-full text-sm text-slate-900 bg-transparent rounded-lg border appearance-none focus:outline-none focus:ring-0 focus:border-mainColor peer"
+              [class]="
+                dateOfBirthControl?.invalid && dateOfBirthControl?.touched
+                  ? 'border-rose-600'
+                  : 'border-slate-300'
+              "
+            />
+
+            <label
+              for="date"
+              class="absolute text-xs text-slate-500 top-0 left-3 -translate-y-1/2 bg-white px-2"
+            >
+              Date of birth
+            </label>
+          </div>
+          <!-- Error Alert -->
+          @if (dateOfBirthControl?.invalid && dateOfBirthControl?.touched) {
+            <p class="mt-1 text-xs font-semibold text-rose-600">
+              @if (dateOfBirthControl?.hasError('required')) {
+                <span class="block">Date of birth is required.</span>
+              }
+            </p>
+          }
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div>
+        <div class="relative">
+          @let passwordControl = registerForm.get('password');
+
+          <input
+            autocomplete="new-password"
+            formControlName="password"
+            type="password"
+            id="password"
+            placeholder=" "
+            class="block px-3 pr-12 pb-2.5 pt-4 w-full text-sm text-slate-900 bg-transparent rounded-lg border appearance-none focus:outline-none focus:ring-0 focus:border-mainColor peer"
+            [class]="
+              passwordControl?.invalid && passwordControl?.touched
+                ? 'border-rose-600'
+                : 'border-slate-300'
+            "
+          />
+
+          <label
+            for="password"
+            class="absolute text-sm text-slate-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-white px-2 peer-focus:px-2 peer-focus:text-mainColor peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+          >
+            Password
+          </label>
+
+          <span class="absolute top-1/2 -translate-y-1/2 right-4 text-slate-400 cursor-pointer">
+            <i class="fa-regular fa-eye-slash"></i>
+          </span>
+        </div>
+        <!-- Error Alert -->
+        @if (passwordControl?.invalid && passwordControl?.touched) {
+          <p class="mt-1 text-xs font-semibold text-rose-600">
+            @if (passwordControl?.hasError('required')) {
+              <span class="block">password is required.</span>
+            } @else if (passwordControl?.hasError('pattern')) {
+              <span class="block">
+                Password must be at least 8 characters long and contain at least one uppercase
+                letter, one lowercase letter, one number, and one special character.
+              </span>
+
+              <!-- <span class="block">
+                Password must include uppercase, lowercase, number, and special character.
+              </span> -->
+            }
+          </p>
+        }
+      </div>
+
+      <!-- Confirm Password -->
+      <div>
+        <div class="relative">
+          <input
+            autocomplete="new-password"
+            formControlName="rePassword"
+            type="password"
+            id="repassword"
+            placeholder=" "
+            class="block px-3 pr-12 pb-2.5 pt-4 w-full text-sm text-slate-900 bg-transparent rounded-lg border border-slate-300 appearance-none focus:outline-none focus:ring-0 focus:border-mainColor peer"
+          />
+
+          <label
+            for="repassword"
+            class="absolute text-sm text-slate-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-white px-2 peer-focus:px-2 peer-focus:text-mainColor peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+          >
+            Confirm password
+          </label>
+
+          <span class="absolute top-1/2 -translate-y-1/2 right-4 text-slate-400 cursor-pointer">
+            <i class="fa-regular fa-eye-slash"></i>
+          </span>
+        </div>
+        <!-- Error Alert -->
+        <!-- <p class="mt-1 text-xs font-semibold text-rose-600">
+          <span class="block">Please confirm your password. </span>
+          <span class="block">Passwords do not match. </span>
+        </p> -->
+      </div>
+
+      <!-- Terms -->
+      <div class="flex items-start gap-3">
+        <input
+          id="terms"
+          type="checkbox"
+          class="mt-1 w-4 h-4 cursor-pointer accent-mainColor border-slate-950 rounded-2xl"
+        />
+
+        <label for="terms" class="text-sm text-slate-500 cursor-pointer">
+          I agree to the
+
+          <a href="#" class="text-mainColor font-semibold hover:underline"> Terms & Conditions </a>
+
+          and
+
+          <a href="#" class="text-mainColor font-semibold hover:underline"> Privacy Policy </a>
+        </label>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="pt-4">
+        <button
+          [disabled]="loading"
+          class="w-full cursor-pointer bg-mainColor hover:bg-mainColor/90 text-white font-bold py-3.5 rounded-lg shadow-lg shadow-mainColor/25 transition-all duration-300 hover:-translate-y-px active:translate-y-0 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          @if (loading) {
+            <span>
+              Please wait
+              <i class="fas fa-spinner animate-spin"></i>
+            </span>
+          } @else {
+            <span>Create New Account</span>
+          }
+        </button>
+        @if (errMsg) {
+          <p
+            class="text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-700 px-3 py-2 rounded-sm mt-4"
+          >
+            <span class="block">{{ errMsg }} </span>
+          </p>
+        }
+      </div>
+
+      <!-- Divider -->
+      <div class="flex items-center gap-4 py-2">
+        <div class="h-px flex-1 bg-slate-200"></div>
+
+        <span class="text-xs text-slate-400"> OR </span>
+
+        <div class="h-px flex-1 bg-slate-200"></div>
+      </div>
+
+      <!-- Social Login -->
+      <div class="grid grid-cols-2 gap-4">
+        <!-- Google -->
+        <button
+          type="button"
+          class="flex items-center justify-center gap-2 border border-slate-300 rounded-lg py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition"
+        >
+          <img
+            src="https://www.svgrepo.com/show/475656/google-color.svg"
+            alt="Google"
+            class="w-5 h-5"
+          />
+
+          Continue with Google
+        </button>
+
+        <!-- Apple -->
+        <button
+          type="button"
+          class="flex items-center justify-center gap-2 border border-slate-300 rounded-lg py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition"
+        >
+          <i class="fa-brands fa-apple text-xl text-slate-900"></i>
+
+          Continue with Apple
+        </button>
+      </div>
+
+      <!-- Login Link -->
+      <p class="text-center text-sm text-slate-500 mt-8">
+        Already have an account?
+
+        <a href="#" class="text-mainColor font-bold cursor-pointer hover:underline ml-1">
+          Log In
+        </a>
+      </p>
+    </form>
+  </div>
+</div>

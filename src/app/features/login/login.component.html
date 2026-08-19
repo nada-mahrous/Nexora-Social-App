@@ -1,0 +1,134 @@
+<!-- Right Side: Login Form -->
+<div class="w-full h-full flex flex-col justify-center items-center p-8 lg:p-16 lg:py-7 bg-white">
+  <div class="w-full max-w-md">
+    <!-- Mobile Logo -->
+    <div class="lg:hidden mb-8 flex items-center gap-2">
+      <span class="text-mainColor text-3xl font-bold">
+        <i class="fa-brands fa-hive"></i>
+      </span>
+
+      <span class="text-xl font-bold text-slate-900"> Nexora </span>
+    </div>
+
+    <!-- Heading -->
+    <div class="mb-10">
+      <h2 class="text-3xl font-extrabold text-slate-900 mb-2">Welcome Back!</h2>
+
+      <p class="text-slate-500">Good to see you again.</p>
+      <p class="text-slate-500">Log in to continue your social journey.</p>
+    </div>
+
+    <!-- Form -->
+    <form class="space-y-5">
+      <!-- Email or Username -->
+      <div>
+        <div class="relative">
+          <input
+            autocomplete="off"
+            type="text"
+            id="login"
+            placeholder=" "
+            class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-slate-900 bg-transparent rounded-lg border border-slate-300 appearance-none focus:outline-none focus:ring-0 focus:border-mainColor peer"
+          />
+
+          <label
+            for="login"
+            class="absolute text-sm text-slate-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-white px-2 peer-focus:px-2 peer-focus:text-mainColor peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+          >
+            Email or username
+          </label>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div>
+        <div class="relative">
+          <input
+            autocomplete="new-password"
+            type="password"
+            id="password"
+            placeholder=" "
+            class="block px-2.5 pr-12 pb-2.5 pt-4 w-full text-sm text-slate-900 bg-transparent rounded-lg border border-slate-300 appearance-none focus:outline-none focus:ring-0 focus:border-mainColor peer"
+          />
+
+          <label
+            for="password"
+            class="absolute text-sm text-slate-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-white px-2 peer-focus:px-2 peer-focus:text-mainColor peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+          >
+            Password
+          </label>
+
+          <!-- Eye Icon -->
+          <span class="absolute top-1/2 -translate-y-1/2 right-4 text-slate-400 cursor-pointer">
+            <i class="fa-regular fa-eye-slash"></i>
+          </span>
+        </div>
+      </div>
+
+      <!-- Login Button -->
+      <div class="pt-4">
+        <button
+          type="button"
+          class="w-full cursor-pointer bg-mainColor hover:bg-mainColor/90 text-white font-bold py-3.5 rounded-lg shadow-sm shadow-mainColor/25 transition-all duration-300"
+        >
+          Log in
+        </button>
+      </div>
+
+      <!-- Forgotten Password -->
+      <div class="mt-4">
+        <button
+          type="button"
+          class="w-full cursor-pointer hover:bg-slate-100 text-slate-700 font-bold py-3.5 rounded-lg transition-all duration-300"
+        >
+          Forgotten password?
+        </button>
+      </div>
+
+      <!-- Divider -->
+      <div class="flex items-center gap-4 py-2">
+        <div class="h-px flex-1 bg-slate-200"></div>
+
+        <span class="text-xs text-slate-400"> OR </span>
+
+        <div class="h-px flex-1 bg-slate-200"></div>
+      </div>
+
+      <!-- Social Login -->
+      <div class="grid grid-cols-2 gap-4">
+        <!-- Google -->
+        <button
+          type="button"
+          class="flex items-center justify-center gap-2 border border-slate-300 rounded-lg py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition"
+        >
+          <img
+            src="https://www.svgrepo.com/show/475656/google-color.svg"
+            alt="Google"
+            class="w-5 h-5"
+          />
+
+          Continue with Google
+        </button>
+
+        <!-- Apple -->
+        <button
+          type="button"
+          class="flex items-center justify-center gap-2 border border-slate-300 rounded-lg py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition"
+        >
+          <i class="fa-brands fa-apple text-xl text-slate-900"></i>
+
+          Continue with Apple
+        </button>
+      </div>
+
+      <!-- Login Link -->
+      <p class="text-center text-sm text-slate-500 mt-8">
+        Don't have an account?
+
+        <a href="#" class="text-mainColor font-bold cursor-pointer hover:underline ml-1">
+          Sign up
+        </a>
+      </p>
+    </form>
+  </div>
+</div>
