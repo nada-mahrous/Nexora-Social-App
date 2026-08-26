@@ -1,65 +1,99 @@
-<div class="grid lg:grid-cols-2 min-h-screen bg-[#f5f6f8] text-slate-900">
-  <!-- Left Side: Brand Imagery -->
-  <div class="hidden h-full lg:flex relative overflow-hidden via-[#e3e6ec] to-[#e3e6ec]">
+<div class="grid lg:grid-cols-2 h-dvh bg-white text-slate-900">
+  <!-- Left Side -->
+  <div class="hidden lg:flex relative h-dvh overflow-hidden bg-[#f8faff]">
+    <!-- Soft Background -->
+    <div class="absolute inset-0 z-0 bg-linear-to-br from-white via-[#fafbff] to-[#eef2ff]"></div>
+
+    <!-- Social background -->
+    <img
+      src="/assets/images/signImage.png"
+      alt="Nexora social community"
+      class="absolute right-[-1%] top-0 z-1 h-full w-auto max-w-none object-contain object-right [-webkit-mask-image:linear-gradient(to_right,transparent_0%,black_18%,black_100%)] mask-[linear-gradient(to_right,transparent_0%,black_18%,black_100%)]"
+    />
+
+    <!-- White Fade Behind Text -->
     <div
-      class="absolute inset-0 z-0 opacity-40 bg-cover bg-center bg-[url('../public/assets/images/signImage.png')]"
-    ></div>
-    <div
-      class="absolute inset-0 bg-linear-to-br from-mainColor via-[#256af4cc] to-transparent z-10"
+      class="absolute inset-0 z-10 bg-linear-to-r from-white from-0% via-white/95 via-36% to-transparent to-58%"
     ></div>
 
-    <div class="relative z-20 flex flex-col gap-20 p-16 w-full">
+    <!-- Very Soft Glow -->
+    <div
+      class="absolute -top-32 -left-32 z-10 w-96 h-96 rounded-full bg-mainColor/5 blur-3xl"
+    ></div>
+
+    <!-- Content -->
+    <div class="relative z-20 w-full h-full flex flex-col justify-between px-14 xl:px-16 py-12">
       <!-- Logo -->
-      <div class="flex items-center gap-3 text-white">
+      <div class="flex items-center gap-3">
         <div
-          class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center"
+          class="w-11 h-11 rounded-lg bg-mainColor/8 border border-mainColor/10 flex items-center justify-center"
         >
-          <span class="material-symbols-outlined text-white text-2xl"
-            ><i class="fa-brands fa-hive"></i
-          ></span>
+          <i class="fa-brands fa-hive text-mainColor text-2xl"></i>
         </div>
-        <h2 class="text-2xl font-bold tracking-tight">Nexora</h2>
+
+        <h2 class="text-2xl font-bold tracking-tight text-slate-900">Nexora</h2>
       </div>
 
-      <!-- Tagline -->
-      <div class="max-w-md">
-        <h1 class="text-5xl font-extrabold text-white leading-tight mb-6">
-          <span class="">Connect</span> with <span>your world</span>
+      <!-- Hero Content -->
+      <div class="max-w-115">
+        <!-- Heading -->
+        <h1
+          class="text-5xl xl:text-[3.5rem] font-extrabold text-slate-900 leading-[1.07] tracking-tight mb-6"
+        >
+          Connect with your
+          <span class="text-mainColor whitespace-nowrap"> world. </span>
         </h1>
-        <p class="text-white/90 text-lg leading-relaxed mb-8">
-          Join over 10 million creators and thinkers, Share updates, discover new perspectives, and
-          build meaningful connections.
+
+        <!-- Description -->
+        <p class="max-w-88.75 text-slate-600 text-lg leading-7 mb-8">
+          Share what matters, discover new perspectives, and stay close to the people and
+          communities you care about.
         </p>
-        <!-- bottom -->
-        <div class="mt-12 z-10">
-          <ul class="flex items-center justify-between gap-5 text-white text-sm font-medium">
-            <li>
-              <div class="flex gap-2 items-center">
-                <i class="fa-solid fa-users text-2xl"></i>
-                <span class="text-2xl font-bold">2M+</span>
-              </div>
-              <p>Active Users</p>
-            </li>
-            <li>
-              <div class="flex gap-2 items-center">
-                <i class="fa-solid fa-heart text-2xl"></i>
-                <span class="text-2xl font-bold">10M+</span>
-              </div>
-              <p>Posts Shared</p>
-            </li>
-            <li>
-              <div class="flex gap-2 items-center">
-                <i class="fa-solid fa-message text-2xl"></i>
-                <span class="text-2xl font-bold">50M+</span>
-              </div>
-              <p>Messages Sent</p>
-            </li>
-          </ul>
+
+        <!-- Features -->
+        <div class="flex items-center gap-4">
+          <!-- Connect -->
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-mainColor/10 flex items-center justify-center">
+              <i class="fa-solid fa-users text-mainColor text-xs"></i>
+            </div>
+
+            <span class="text-sm font-semibold text-slate-800"> Connect </span>
+          </div>
+
+          <!-- Separator -->
+          <span class="rounded-full bg-slate-300"></span>
+
+          <!-- Share -->
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-mainColor/10 flex items-center justify-center">
+              <i class="fa-regular fa-paper-plane text-mainColor text-xs"></i>
+            </div>
+
+            <span class="text-sm font-semibold text-slate-800"> Share </span>
+          </div>
+
+          <!-- Separator -->
+          <span class="rounded-full bg-slate-300"></span>
+
+          <!-- Discover -->
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-mainColor/10 flex items-center justify-center">
+              <i class="fa-regular fa-compass text-mainColor text-xs"></i>
+            </div>
+
+            <span class="text-sm font-semibold text-slate-800"> Discover </span>
+          </div>
         </div>
       </div>
+
+      <!-- Footer -->
+      <div class="text-slate-400 text-xs tracking-wide">© 2026 Nexora</div>
     </div>
   </div>
-  <div>
+
+  <!-- Right Side -->
+  <div class="bg-white h-dvh">
     <router-outlet></router-outlet>
   </div>
 </div>

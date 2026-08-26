@@ -1,0 +1,18 @@
+.active-nav-link {
+  color: #0f172a;
+}
+
+.active-nav-link::after {
+  content: '';
+  position: absolute;
+
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  height: 3px;
+
+  border-radius: 9999px;
+
+  background: linear-gradient(to right, #a855f7, #3b82f6);
+}

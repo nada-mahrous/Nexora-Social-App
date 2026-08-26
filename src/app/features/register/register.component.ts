@@ -1,18 +1,26 @@
-import { Component, inject } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../core/auth/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../../core/auth/services/auth.service';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly fb = inject(FormBuilder);
 
   // Error message to display to the user
   errMsg: string = '';
@@ -21,21 +29,39 @@ export class RegisterComponent {
   loading: boolean = false;
 
   // Form group for the registration form
-  registerForm: FormGroup = new FormGroup(
-    {
-      name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      username: new FormControl(''),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      dateOfBirth: new FormControl('', [Validators.required]),
-      gender: new FormControl('', [Validators.required]),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/),
-      ]),
-      rePassword: new FormControl('', [Validators.required]),
-    },
-    // { updateOn: 'submit' },
-  );
+  registerForm!: FormGroup;
+
+  // Subscription to handle the registration form submission
+  registerSub$: Subscription = new Subscription();
+
+  // Form group for the registration form
+  // when the component is initialized, create the form group and form controls with validators
+  ngOnInit(): void {
+    this.registerFormInit();
+  }
+
+  // Initialize the registration form with form controls and validators
+  registerFormInit(): void {
+    this.registerForm = this.fb.group(
+      {
+        name: ['', [Validators.required, Validators.minLength(3)]],
+        username: [''],
+        email: ['', [Validators.required, Validators.email]],
+        dateOfBirth: ['', [Validators.required]],
+        gender: ['', [Validators.required]],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/),
+          ],
+        ],
+        rePassword: ['', [Validators.required]],
+        terms: [false, Validators.requiredTrue],
+      }, // { updateOn: 'submit' },
+      { validators: [this.confirmPassword] },
+    );
+  }
 
   // Submit the registration form
   submitForm(): void {
@@ -45,8 +71,14 @@ export class RegisterComponent {
       // show loading spinner
       this.loading = true;
 
+      // unsubscribe from previous subscription if any
+      this.registerSub$.unsubscribe();
+
+      // destructure the form value to remove the terms field before sending it to the backend
+      const { terms, ...registerData } = this.registerForm.value;
+
       // Call the signUp method of the AuthService to register the user
-      this.authService.signUp(this.registerForm.value).subscribe({
+      this.registerSub$ = this.authService.signUp(registerData).subscribe({
         next: (res) => {
           if (res.success) {
             // redirect to login page
@@ -71,6 +103,31 @@ export class RegisterComponent {
       });
     } else {
       this.registerForm.markAllAsTouched();
+    }
+  }
+
+  // custom validator to check if password and rePassword match
+  confirmPassword(group: AbstractControl) {
+    // check if pass !== rePass ----> set an error in rePass control [mismatch]
+    // if pass == rePass ----> return null
+
+    const password = group.get('password')?.value;
+    const rePassword = group.get('rePassword')?.value;
+
+    if (password !== rePassword && rePassword !== '') {
+      group.get('rePassword')?.setErrors({ mismatch: true });
+      return { mismatch: true };
+    } else {
+      return null;
+    }
+  }
+
+  // show/hide password function
+  showPassword(element: HTMLInputElement): void {
+    if (element.type === 'password') {
+      element.type = 'text';
+    } else {
+      element.type = 'password';
     }
   }
 }
