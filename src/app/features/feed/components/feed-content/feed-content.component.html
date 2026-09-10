@@ -1,28 +1,36 @@
 <section>
   <!-- ================= CREATE POST ================= -->
   <form
+    #form
+    (submit)="submitForm($event, form)"
     class="w-full bg-white rounded-[16px] shadow-sm border border-slate-200 p-4 font-sans flex flex-col"
   >
     <!-- User Info -->
     <div class="flex items-center gap-3 mb-3">
       <img
-        src="/assets/images/default-profile.png"
-        alt="Profile"
+        [src]="userData.photo"
+        [alt]="userData.name"
         class="w-10 h-10 rounded-full object-cover shrink-0 bg-slate-100 border border-slate-50"
       />
 
       <div>
-        <span class="text-[15px] font-bold text-slate-900 leading-tight"> Nada Mahrous </span>
+        <span class="text-[15px] font-bold text-slate-900 leading-tight capitalize">
+          {{ userData.name }}
+        </span>
 
         <!-- Privacy -->
         <div
-          class="flex p-1 w-fit items-center gap-1 bg-slate-50 border border-slate-200 text-slate-700 text-sm rounded-lg shadow-xs"
+          class="flex items-center w-fit h-6 ps-2 gap-1.5 bg-slate-50 border border-slate-200 rounded-full text-slate-600"
         >
-          <i class="fa-solid fa-earth-americas text-md"></i>
-          <select class="border-none bg-transparent cursor-pointer outline-none py-1 pe-6 text-xs">
-            <option>Public</option>
-            <option>Followers</option>
-            <option>Only me</option>
+          <i class="fa-solid fa-earth-americas text-2xs"></i>
+
+          <select
+            [formControl]="privacyControl"
+            class="bg-transparent border-0 cursor-pointer text-[11px] font-medium text-slate-600 p-2 pe-6 outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 focus:border-0"
+          >
+            <option value="public">public</option>
+            <option value="following">followers</option>
+            <option value="only_me">only me</option>
           </select>
         </div>
       </div>
@@ -31,17 +39,44 @@
     <!-- Post Content -->
     <div class="mb-4">
       <textarea
+        [formControl]="contentControl"
         class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-[15px] text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-50 focus:border-blue-300 transition-all resize-none min-h-30"
         placeholder="What's on your mind...?"
       ></textarea>
     </div>
 
-    <hr class="border-t border-slate-200 mb-4" />
+    <!-- preview img -->
+    @if (imgUrl) {
+      <div
+        class="mb-4 relative rounded-2xl overflow-hidden border border-white/10 group max-h-85 w-full"
+      >
+        <img [src]="imgUrl" alt="preview image" class="w-full rounded-lg max-h-60 object-cover" />
+
+        <button
+          type="button"
+          (click)="removeFile()"
+          class="cursor-pointer absolute top-3 right-3 bg-black/60 hover:bg-black/80 text-white rounded-full p-1.5 transition"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            class="w-4 h-4"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    }
+
+    <hr class="border-t border-slate-400 mb-4" />
 
     <!-- Actions -->
     <div class="flex items-center justify-between">
       <!-- Photo -->
-      <input type="file" id="file" class="hidden" />
+      <input (change)="changeFile($event)" type="file" id="file" class="hidden" />
 
       <label
         for="file"
@@ -56,7 +91,7 @@
 
       <!-- Post Button -->
       <button
-        type="button"
+        type="submit"
         class="cursor-pointer bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg font-bold text-[14px] flex items-center gap-2 focus:ring-4 focus:ring-blue-200 outline-none transition-colors"
       >
         Post
@@ -66,150 +101,199 @@
     </div>
   </form>
 
-  <!-- ================= SAMPLE POST ================= -->
-  <article class="mt-4 w-full bg-white rounded-[16px] shadow-sm border border-slate-200 p-4">
-    <!-- Post Header -->
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <img
-          src="/assets/images/default-profile.png"
-          alt="Profile"
-          class="w-10 h-10 rounded-full object-cover"
-        />
+  <!-- ================= single POST ================= -->
+  @for (post of postsList; track post._id; let i = $index) {
+    <div class="mt-4 w-full bg-white rounded-[16px] shadow-sm border border-slate-200 p-4 mb-4">
+      <!-- Post Header -->
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img
+            [src]="post.user.photo"
+            [alt]="post.user.name"
+            class="w-10 h-10 rounded-full object-cover cursor-pointer"
+          />
 
-        <div>
-          <!-- Name -->
-          <h3 class="text-sm font-bold text-slate-900">Nada Mahrous</h3>
+          <div>
+            <!-- Name -->
+            <h3
+              class="text-sm font-bold text-slate-900 cursor-pointer hover:text-blue-600 transition-colors"
+            >
+              {{ post.user.name }}
+            </h3>
 
-          <!-- Username + Time + Privacy -->
-          <div class="flex items-center gap-1 text-xs text-slate-500 mt-0.5">
-            <span>@nadaMahrous</span>
+            <!-- Username + Time + Privacy -->
+            <div class="flex items-center gap-1 text-xs text-slate-500 mt-0.5">
+              <span class="cursor-pointer hover:underline">@{{ post.user.username }}</span>
 
-            <span>·</span>
+              <span>·</span>
 
-            <span>2h</span>
+              <span class="cursor-pointer hover:underline">{{ post.createdAt }}</span>
 
-            <span>·</span>
+              @if (post.user._id === userId) {
+                <span>·</span>
 
-            <span class="flex items-center gap-1">
-              Public
+                <div class="relative flex items-center gap-1 text-xs text-slate-500">
+                  @if (post.privacy === 'public') {
+                    <i class="fa-solid fa-earth-americas text-[11px]"></i>
+                    <span>Public</span>
+                  }
 
-              <i class="fa-solid fa-earth-americas text-2xs"></i>
-            </span>
+                  @if (post.privacy === 'following') {
+                    <i class="fa-solid fa-user-group text-[11px]"></i>
+                    <span>Followers</span>
+                  }
+
+                  @if (post.privacy === 'only_me') {
+                    <i class="fa-solid fa-lock text-[11px]"></i>
+                    <span>Only me</span>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- More Menu -->
+        <div class="relative">
+          <!-- Hidden Checkbox -->
+          <input type="checkbox" [id]="'moreMenu-' + i" class="peer hidden" />
+
+          <!-- 3 Dots -->
+          <label
+            [for]="'moreMenu-' + i"
+            class="w-9 h-9 flex items-center justify-center cursor-pointer rounded-full hover:bg-slate-100 text-slate-500 transition-colors"
+          >
+            <i class="fa-solid fa-ellipsis"></i>
+          </label>
+
+          <!-- Overlay -->
+          <label
+            [for]="'moreMenu-' + i"
+            class="fixed inset-0 z-40 hidden peer-checked:block cursor-default"
+          ></label>
+
+          <!-- Dropdown -->
+          <div
+            class="absolute right-0 top-11 z-50 w-48 rounded-xl border border-slate-200 bg-white p-2 shadow-xl invisible opacity-0 pointer-events-none -translate-y-1 peer-checked:visible peer-checked:opacity-100 peer-checked:pointer-events-auto peer-checked:translate-y-0 transition-all duration-150"
+          >
+            <!-- Copy Link -->
+            <button
+              type="button"
+              class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-slate-700 hover:bg-slate-50 cursor-pointer"
+            >
+              <i class="fa-regular fa-copy w-4 text-center"></i>
+              <span>Copy link</span>
+            </button>
+
+            <!-- Save -->
+            <button
+              type="button"
+              class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-slate-700 hover:bg-slate-50 cursor-pointer"
+            >
+              <i class="fa-regular fa-bookmark w-4 text-center"></i>
+              <span>Save Post</span>
+            </button>
+
+            @if (post.user._id === userId) {
+              <!-- Edit -->
+              <button
+                class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-slate-700 hover:bg-slate-50 cursor-pointer"
+              >
+                <i class="fa-solid fa-pencil w-4 text-center"></i>
+                <span>Edit post</span>
+              </button>
+
+              <!-- Delete -->
+              <button
+                (click)="deletePostItem(post.id)"
+                class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-red-600 hover:bg-red-50 cursor-pointer"
+              >
+                <i class="fa-regular fa-trash-can w-4 text-center"></i>
+                <span>Delete post</span>
+              </button>
+            }
           </div>
         </div>
       </div>
 
-      <!-- More Menu -->
-      <details class="relative">
-        <!-- 3 Dots Button -->
-        <summary
-          class="list-none [&::-webkit-details-marker]:hidden w-9 h-9 flex items-center justify-center cursor-pointer rounded-full hover:bg-slate-100 text-slate-500 transition-colors"
+      <!-- ================= POST TEXT ================= -->
+      @if (post.body) {
+        <p
+          class="mt-4 text-slate-800 leading-6 text-[15px] tracking-wide font-normal wrap-break-word cursor-pointer"
         >
-          <i class="fa-solid fa-ellipsis"></i>
-        </summary>
+          {{ post.body }}
+        </p>
+      }
+      <!-- ================= POST IMAGE ================= -->
+      <div class="mt-4 overflow-hidden rounded-xl">
+        @if (post.image) {
+          <img
+            [src]="post.image"
+            alt="Post photo"
+            class="w-full cursor-pointer max-h-90 object-cover transition-transform duration-700 hover:scale-[1.08]"
+          />
+        }
+      </div>
 
-        <!-- Dropdown Menu -->
-        <div
-          class="absolute right-0 top-11 z-50 w-48 rounded-xl border border-slate-200 bg-white p-2 shadow-xl"
-        >
-          <!-- Copy Link -->
-          <button
-            type="button"
-            class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer"
+      <!-- ================= POST INFO ================= -->
+      <div class="mt-4 flex items-center justify-between text-xs text-slate-500">
+        <!-- Likes -->
+        <div class="flex items-center gap-1.5">
+          <span
+            class="w-5 h-5 bg-blue-500 text-white rounded-full flex items-center justify-center"
           >
-            <i class="fa-regular fa-copy w-4 text-center"></i>
-            <span>Copy link</span>
-          </button>
+            <i class="fa-solid fa-thumbs-up text-[9px]"></i>
+          </span>
 
-          <!-- Save Post -->
-          <button
-            type="button"
-            class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer"
-          >
-            <i class="fa-regular fa-bookmark w-4 text-center"></i>
-            <span>Save Post</span>
-          </button>
-
-          <!-- Edit Post -->
-          <button
-            type="button"
-            class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer"
-          >
-            <i class="fa-solid fa-pencil w-4 text-center"></i>
-            <span>Edit post</span>
-          </button>
-
-          <!-- Delete Post -->
-          <button
-            type="button"
-            class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
-          >
-            <i class="fa-regular fa-trash-can w-4 text-center"></i>
-            <span>Delete post</span>
-          </button>
+          <span>{{ post.likesCount }} likes</span>
         </div>
-      </details>
-    </div>
 
-    <!-- ================= POST TEXT ================= -->
-    <p class="mt-4 text-[15px] text-slate-800 leading-6">Building something new today ✨</p>
+        <!-- Comments + Shares -->
+        <div class="flex items-center gap-4">
+          <span class="cursor-pointer hover:underline"> {{ post.commentsCount }} comments </span>
 
-    <!-- ================= POST IMAGE ================= -->
-    <div class="mt-4 overflow-hidden rounded-xl">
-      <img src="/assets/images/post.png" alt="Post" class="w-full max-h-90 object-cover" />
-    </div>
-
-    <!-- ================= POST INFO ================= -->
-    <div class="mt-4 flex items-center justify-between text-xs text-slate-500">
-      <!-- Likes -->
-      <div class="flex items-center gap-1.5">
-        <span class="w-5 h-5 bg-blue-500 text-white rounded-full flex items-center justify-center">
-          <i class="fa-solid fa-thumbs-up text-[9px]"></i>
-        </span>
-
-        <span>12 likes</span>
+          <span class="cursor-pointer hover:underline"> {{ post.sharesCount }} shares </span>
+        </div>
       </div>
 
-      <!-- Comments + Shares -->
-      <div class="flex items-center gap-4">
-        <span class="cursor-pointer hover:underline"> 3 comments </span>
+      <!-- ================= POST ACTIONS ================= -->
+      <div class="mt-3 pt-3 border-t border-slate-200 grid grid-cols-3 gap-2">
+        <!-- Like -->
+        <button
+          class="flex cursor-pointer items-center justify-center gap-2 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-blue-600 transition-colors"
+        >
+          <i class="fa-regular fa-thumbs-up"></i>
 
-        <span class="cursor-pointer hover:underline"> 2 shares </span>
+          Like
+        </button>
+
+        <!-- Comment -->
+        <button
+          #commentBtn
+          type="button"
+          class="flex cursor-pointer items-center justify-center gap-2 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-blue-600 transition-colors"
+        >
+          <i class="fa-regular fa-comment"></i>
+
+          Comment
+        </button>
+
+        <!-- Share -->
+        <button
+          class="flex cursor-pointer items-center justify-center gap-2 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-blue-600 transition-colors"
+        >
+          <i class="fa-solid fa-share"></i>
+
+          Share
+        </button>
       </div>
+
+      <!-- ******************************************************* -->
+
+      <!-- Comments & create comment -->
+      @defer (on interaction(commentBtn)) {
+        <app-post-comments [postId]="post.id" />
+      }
     </div>
-
-    <!-- ================= POST ACTIONS ================= -->
-    <div class="mt-3 pt-3 border-t border-slate-200 grid grid-cols-3 gap-2">
-      <!-- Like -->
-      <button
-        type="button"
-        class="flex cursor-pointer items-center justify-center gap-2 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-      >
-        <i class="fa-regular fa-thumbs-up"></i>
-
-        Like
-      </button>
-
-      <!-- Comment -->
-      <button
-        type="button"
-        class="flex cursor-pointer items-center justify-center gap-2 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-      >
-        <i class="fa-regular fa-comment"></i>
-
-        Comment
-      </button>
-
-      <!-- Share -->
-      <button
-        type="button"
-        class="flex cursor-pointer items-center justify-center gap-2 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-      >
-        <i class="fa-solid fa-share"></i>
-
-        Share
-      </button>
-    </div>
-  </article>
+  }
 </section>
