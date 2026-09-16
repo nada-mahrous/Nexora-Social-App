@@ -1,0 +1,59 @@
+<div
+  class="flex flex-wrap items-center gap-3 border border-gray-200 w-fit rounded-md shadow p-2 mb-2"
+>
+  <!-- English -->
+  <button
+    (click)="change('en')"
+    class="rounded-md shadow px-2 py-1 cursor-pointer"
+    [class]="{
+      'bg-mainColor': translateService.getCurrentLang() === 'en',
+      'text-white': translateService.getCurrentLang() === 'en',
+    }"
+  >
+    EN
+  </button>
+  <!-- Arabic -->
+  <button
+    (click)="change('ar')"
+    class="rounded-md shadow px-2 py-1 cursor-pointer"
+    [class]="{
+      'bg-mainColor': translateService.getCurrentLang() === 'ar',
+      'text-white': translateService.getCurrentLang() === 'ar',
+    }"
+  >
+    AR
+  </button>
+  <!-- French -->
+  <button
+    (click)="change('fr')"
+    class="rounded-md shadow px-2 py-1 cursor-pointer"
+    [class]="{
+      'bg-mainColor': translateService.getCurrentLang() === 'fr',
+      'text-white': translateService.getCurrentLang() === 'fr',
+    }"
+  >
+    FR
+  </button>
+  <!-- German -->
+  <button
+    (click)="change('de')"
+    class="rounded-md shadow px-2 py-1 cursor-pointer"
+    [class]="{
+      'bg-mainColor': translateService.getCurrentLang() === 'de',
+      'text-white': translateService.getCurrentLang() === 'de',
+    }"
+  >
+    DE
+  </button>
+  <!-- Italian -->
+  <button
+    (click)="change('it')"
+    class="rounded-md shadow px-2 py-1 cursor-pointer"
+    [class]="{
+      'bg-mainColor': translateService.getCurrentLang() === 'it',
+      'text-white': translateService.getCurrentLang() === 'it',
+    }"
+  >
+    IT
+  </button>
+</div>

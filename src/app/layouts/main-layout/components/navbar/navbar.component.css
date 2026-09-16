@@ -1,5 +1,6 @@
 .active-nav-link {
-  color: #0f172a;
+  /* color: #0f172a; */
+  color: #1f6fe5;
 }
 
 .active-nav-link::after {

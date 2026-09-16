@@ -1,0 +1,47 @@
+{
+  "login": {
+    "brand": "Nexora",
+    "title": "Bentornato!",
+    "subtitleLine1": "È bello rivederti.",
+    "subtitleLine2": "Accedi per continuare il tuo percorso con Nexora.",
+    "email": {
+      "label": "Indirizzo email",
+      "validation": {
+        "required": "L'indirizzo email è obbligatorio.",
+        "invalid": "Inserisci un indirizzo email valido."
+      }
+    },
+    "password": {
+      "label": "Password",
+      "validation": {
+        "required": "La password è obbligatoria.",
+        "pattern": "La password deve contenere almeno 8 caratteri, inclusi almeno una lettera maiuscola, una lettera minuscola, un numero e un carattere speciale."
+      }
+    },
+    "rememberMe": "Ricordami",
+    "forgotPassword": "Password dimenticata?",
+    "submit": "Accedi",
+    "loading": "Attendi",
+    "or": "OPPURE",
+    "social": {
+      "google": "Continua con Google",
+      "apple": "Continua con Apple"
+    },
+    "terms": {
+      "prefix": "Continuando, accetti i",
+      "termsOfService": "Termini di servizio",
+      "and": "e la",
+      "privacyPolicy": "Informativa sulla privacy"
+    },
+    "signup": {
+      "question": "Non hai un account?",
+      "action": "Registrati"
+    },
+    "errors": {
+      "generic": "Si è verificato un errore. Riprova.",
+      "invalidCredentials": "Email o password non valide.",
+      "accountNotFound": "Nessun account trovato con queste credenziali.",
+      "serverError": "Errore del server. Riprova più tardi."
+    }
+  }
+}

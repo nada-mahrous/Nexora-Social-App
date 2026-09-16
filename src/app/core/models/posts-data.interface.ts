@@ -32,7 +32,9 @@ export interface Post {
   likesCount: number;
 
   isShare: boolean;
-  bookmarked: boolean;
+
+  bookmarked?: boolean;
+  bookmarksCount?: number;
 }
 
 export interface User {

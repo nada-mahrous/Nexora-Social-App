@@ -1,19 +1,14 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  AbstractControl,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../core/auth/services/auth.service';
-
+//BtnLangComponent
 @Component({
   selector: 'app-login',
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, TranslatePipe],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -103,3 +98,14 @@ export class LoginComponent {
 }
 // nada55@gmail.com
 // Nada123@
+
+// create post --> comment - reply
+// like & unlike --> bookmark - unbookmark
+
+/* 
+  POSTS:
+  ------
+  get post likes
+  bookmark post
+  share post
+  */

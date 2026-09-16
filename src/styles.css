@@ -22,3 +22,14 @@
   --color-mainColor: #256af4;
   --color-secondColor: #f0f2f5;
 }
+
+/* ngx-spinner overlay styles */
+.ngx-spinner-overlay.fade-in {
+  pointer-events: auto !important;
+  visibility: visible !important;
+}
+
+.ngx-spinner-overlay.fade-out {
+  pointer-events: none !important;
+  visibility: hidden !important;
+}

@@ -1,1 +1,752 @@
-<p>profile works!</p>
+<div
+  class="min-h-screen bg-gray-50 text-gray-800 font-sans antialiased pb-12 relative overflow-x-hidden"
+>
+  <div class="max-w-6xl mx-auto px-4 pt-6 relative z-10">
+    <!-- ===================================================== -->
+    <!-- ================= PROFILE FRAME ===================== -->
+    <!-- ===================================================== -->
+
+    <div
+      class="w-full relative bg-white border border-gray-200 rounded-[30px] shadow-lg shadow-gray-200/50 overflow-hidden"
+    >
+      <!-- ===================================================== -->
+      <!-- ================= COVER ============================= -->
+      <!-- ===================================================== -->
+
+      <div class="h-64 md:h-72 w-full relative group/cover overflow-hidden">
+        <!-- ================= COVER IMAGE ================= -->
+
+        @if (user?.cover; as cover) {
+          <img
+            [src]="cover"
+            alt="Profile cover"
+            class="absolute inset-0 w-full h-full object-cover"
+          />
+
+          <div
+            class="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-black/10"
+          ></div>
+        }
+
+        <!-- ================= DEFAULT COVER ================= -->
+
+        @else {
+          <div
+            class="absolute inset-0 bg-[linear-gradient(112deg,#0f172a_0%,#1e3a5f_36%,#2b5178_72%,#5f8fb8_100%)]"
+          ></div>
+
+          <div
+            class="absolute inset-0 bg-[radial-gradient(circle_at_20%_24%,rgba(255,255,255,.14)_0%,rgba(255,255,255,0)_36%)]"
+          ></div>
+
+          <div
+            class="absolute inset-0 bg-[radial-gradient(circle_at_86%_12%,rgba(186,230,253,.22)_0%,rgba(186,230,253,0)_44%)]"
+          ></div>
+
+          <div class="absolute -left-16 top-10 h-36 w-36 rounded-full bg-white/8 blur-3xl"></div>
+
+          <div class="absolute right-8 top-6 h-48 w-48 rounded-full bg-[#c7e6ff]/10 blur-3xl"></div>
+
+          <div
+            class="absolute inset-x-0 bottom-0 h-20 bg-linear-to-t from-black/25 to-transparent"
+          ></div>
+        }
+
+        <!-- ================================================= -->
+        <!-- ================= COVER ACTIONS ================= -->
+        <!-- ================================================= -->
+
+        <div
+          class="absolute top-4 right-4 z-20 flex items-center gap-2 opacity-100 md:opacity-0 group-hover/cover:opacity-100 transition-opacity duration-300"
+        >
+          <!-- View Cover -->
+
+          <button
+            type="button"
+            class="cursor-pointer flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/45 border border-white/10 text-xs font-semibold text-white hover:bg-black/60 transition-colors backdrop-blur-md shadow-sm"
+          >
+            <i class="fa-regular fa-eye"></i>
+
+            <span>View cover</span>
+          </button>
+
+          <!-- Change Cover -->
+
+          <label
+            class="cursor-pointer flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-600 border border-purple-500 text-xs font-semibold text-white hover:bg-purple-700 transition-colors shadow-sm"
+          >
+            <i class="fa-solid fa-camera"></i>
+
+            <span>
+              {{ user?.cover ? 'Change cover' : 'Add cover' }}
+            </span>
+
+            <input type="file" accept="image/*" class="hidden" />
+          </label>
+
+          <!-- Remove -->
+
+          <button
+            type="button"
+            class="cursor-pointer flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-950/60 border border-red-500/30 text-xs font-semibold text-red-400 hover:bg-red-950/80 transition-colors backdrop-blur-md"
+          >
+            <i class="fa-regular fa-trash-can"></i>
+
+            <span>Remove</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ===================================================== -->
+      <!-- ================= PROFILE CONTENT =================== -->
+      <!-- ===================================================== -->
+
+      <div class="relative -mt-12 px-3 pb-5 sm:-mt-16 sm:px-8 sm:pb-6">
+        <!-- ================= WHITE PROFILE CARD ================= -->
+
+        <div class="rounded-3xl border border-white/60 bg-white p-5 backdrop-blur-xl sm:p-7">
+          <!-- ================================================= -->
+          <!-- ================= USER HEADER =================== -->
+          <!-- ================================================= -->
+
+          <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <!-- ================================================= -->
+            <!-- ================= LEFT USER ===================== -->
+            <!-- ================================================= -->
+
+            <div class="min-w-0">
+              <div class="flex items-end gap-4">
+                <!-- ================= PROFILE PHOTO ================= -->
+
+                <div class="group/avatar relative shrink-0">
+                  <button type="button" class="cursor-zoom-in rounded-full">
+                    <img
+                      [src]="user?.photo || 'assets/images/default-profile.png'"
+                      [alt]="user?.name || 'Profile photo'"
+                      class="h-28 w-28 rounded-full border-4 border-white object-cover shadow-md ring-2 ring-[#dbeafe]"
+                    />
+                  </button>
+
+                  <!-- View Profile Photo -->
+
+                  <button
+                    type="button"
+                    title="View profile photo"
+                    aria-label="View profile photo"
+                    class="absolute bottom-1 left-1 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-white text-[#1877f2] opacity-100 shadow-sm ring-1 ring-slate-200 transition duration-200 hover:bg-slate-50 sm:opacity-0 sm:group-hover/avatar:opacity-100 sm:group-focus-within/avatar:opacity-100"
+                  >
+                    <i class="fa-solid fa-expand text-sm"></i>
+                  </button>
+
+                  <!-- Change Profile Photo -->
+
+                  <label
+                    class="absolute bottom-1 right-1 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-[#1877f2] text-white opacity-100 shadow-sm transition duration-200 hover:bg-[#166fe5] sm:opacity-0 sm:group-hover/avatar:opacity-100 sm:group-focus-within/avatar:opacity-100"
+                  >
+                    <i class="fa-solid fa-camera text-sm"></i>
+
+                    <input accept="image/*" type="file" class="hidden" />
+                  </label>
+                </div>
+
+                <!-- ================= USER INFO ================= -->
+
+                <div class="min-w-0 pb-1">
+                  <h2
+                    class="truncate text-2xl font-black tracking-tight text-slate-900 sm:text-4xl"
+                  >
+                    {{ user?.name }}
+                  </h2>
+
+                  <p class="mt-1 text-lg font-semibold text-slate-500 sm:text-xl">
+                    @{{ user?.username }}
+                  </p>
+
+                  <!-- Member Profile -->
+
+                  <div
+                    class="mt-3 inline-flex items-center gap-2 rounded-full border border-[#d7e7ff] bg-[#eef6ff] px-3 py-1 text-xs font-bold text-[#0b57d0]"
+                  >
+                    <i class="fa-solid fa-users text-[13px]"></i>
+
+                    <span> member profile </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ================================================= -->
+            <!-- ================ TOP COUNTERS =================== -->
+            <!-- ================================================= -->
+
+            <div class="grid w-full grid-cols-3 gap-3 lg:w-auto">
+              <!-- Followers -->
+
+              <div
+                class="min-w-27.5 rounded-2xl border border-blue-100 bg-blue-50 px-5 py-3 text-center"
+              >
+                <span class="block text-2xs font-bold uppercase tracking-widest text-blue-500">
+                  Followers
+                </span>
+
+                <span class="mt-1 block text-xl font-extrabold text-blue-600">
+                  {{ user?.followersCount ?? 0 }}
+                </span>
+              </div>
+
+              <!-- Following -->
+
+              <div
+                class="min-w-27.5 rounded-2xl border border-purple-100 bg-purple-50 px-5 py-3 text-center"
+              >
+                <span class="block text-2xs font-bold uppercase tracking-widest text-purple-500">
+                  Following
+                </span>
+
+                <span class="mt-1 block text-xl font-extrabold text-purple-600">
+                  {{ user?.followingCount ?? 0 }}
+                </span>
+              </div>
+
+              <!-- Bookmarks -->
+
+              <div
+                class="min-w-27.5 rounded-2xl border border-pink-100 bg-pink-50 px-5 py-3 text-center"
+              >
+                <span class="block text-2xs font-bold uppercase tracking-widest text-pink-500">
+                  Bookmarks
+                </span>
+
+                <span class="mt-1 block text-xl font-extrabold text-pink-600">
+                  {{ user?.bookmarksCount ?? 0 }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================================================= -->
+          <!-- ================= ABOUT + STATS ================= -->
+          <!-- ================================================= -->
+
+          <div class="mt-8 grid grid-cols-1 gap-5 md:grid-cols-3">
+            <!-- ================================================= -->
+            <!-- ================= ABOUT ========================== -->
+            <!-- ================================================= -->
+
+            <div class="rounded-2xl border border-gray-200 bg-gray-50 p-5 md:col-span-2">
+              <h3 class="mb-4 text-xs font-bold uppercase tracking-widest text-purple-600">
+                About
+              </h3>
+
+              <div class="space-y-3 text-[14px] font-medium text-gray-600">
+                <!-- Email -->
+
+                <div class="flex items-center gap-3">
+                  <i class="fa-regular fa-envelope w-4 text-center text-purple-500"></i>
+
+                  <span> {{ user?.email }} </span>
+                </div>
+
+                <!-- Created -->
+
+                <div class="flex items-center gap-3">
+                  <i class="fa-regular fa-clock w-4 text-center text-purple-500"></i>
+
+                  <span> Created at: {{ user?.createdAt | date: 'MMM d, yyyy' }} </span>
+                </div>
+
+                <!-- Gender -->
+
+                <div class="flex items-center gap-3">
+                  <i class="fa-solid fa-venus w-4 text-center text-pink-500"></i>
+
+                  <span> Gender: {{ user?.gender | titlecase }} </span>
+                </div>
+
+                <!-- Date of birth -->
+
+                <div class="flex items-center gap-3">
+                  <i class="fa-regular fa-calendar w-4 text-center text-blue-500"></i>
+
+                  <span> Date of Birth: {{ user?.dateOfBirth | date: 'MMM d, yyyy' }} </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- ================================================= -->
+            <!-- ================= RIGHT STATS =================== -->
+            <!-- ================================================= -->
+
+            <div class="flex flex-col gap-4">
+              <!-- ================= MY POSTS ================= -->
+
+              <div
+                class="flex-1 rounded-2xl border border-gray-200 bg-white p-5 transition-all duration-300 hover:border-emerald-300 hover:shadow-md"
+              >
+                <span class="text-[11px] font-bold uppercase tracking-widest text-emerald-600">
+                  My Posts
+                </span>
+
+                <span class="mt-3 block text-3xl font-black text-emerald-600">
+                  {{ myPosts.length }}
+                </span>
+              </div>
+
+              <!-- ================= SAVED POSTS ================= -->
+
+              <div
+                class="flex-1 rounded-2xl border border-gray-200 bg-white p-5 transition-all duration-300 hover:border-amber-300 hover:shadow-md"
+              >
+                <span class="text-[11px] font-bold uppercase tracking-widest text-amber-600">
+                  Saved Posts
+                </span>
+
+                <span class="mt-3 block text-3xl font-black text-amber-600">
+                  {{ savedPosts.length }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================================================== -->
+    <!-- ================= PROFILE TABS ====================== -->
+    <!-- ===================================================== -->
+
+    <div
+      class="w-full mt-5 bg-white border border-gray-200 rounded-2xl px-3 py-3 flex items-center justify-between shadow-sm"
+    >
+      <div class="flex items-center gap-1 p-1 bg-gray-50 rounded-xl">
+        <!-- My Posts -->
+
+        <button
+          type="button"
+          (click)="changeTab('posts')"
+          class="cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all border focus:outline-none focus:ring-0"
+          [class.bg-white]="activeTab === 'posts'"
+          [class.border-gray-200]="activeTab === 'posts'"
+          [class.text-blue-600]="activeTab === 'posts'"
+          [class.shadow-sm]="activeTab === 'posts'"
+          [class.border-transparent]="activeTab !== 'posts'"
+          [class.text-gray-700]="activeTab !== 'posts'"
+        >
+          <i class="fa-regular fa-file-lines"></i>
+          <span>My Posts</span>
+        </button>
+
+        <!-- Saved -->
+
+        <button
+          type="button"
+          (click)="changeTab('saved')"
+          class="cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all border focus:outline-none focus:ring-0"
+          [class.bg-white]="activeTab === 'saved'"
+          [class.border-gray-200]="activeTab === 'saved'"
+          [class.text-blue-600]="activeTab === 'saved'"
+          [class.shadow-sm]="activeTab === 'saved'"
+          [class.border-transparent]="activeTab !== 'saved'"
+          [class.text-gray-700]="activeTab !== 'saved'"
+        >
+          <i class="fa-regular fa-bookmark"></i>
+          <span>Saved</span>
+        </button>
+      </div>
+
+      <!-- Count -->
+
+      <span
+        class="w-7 h-7 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-[11px] font-bold text-blue-600"
+      >
+        {{ displayedPosts.length }}
+      </span>
+    </div>
+
+    <!-- ===================================================== -->
+    <!-- ================= POST CARD ========================= -->
+    <!-- ===================================================== -->
+
+    <!-- ******************************************************* -->
+    <!-- ===============  NO POSTS MESSAGE ==================== -->
+
+    @if (displayedPosts.length === 0) {
+      <div class="space-y-3 my-5">
+        <p
+          class="rounded-xl border text-center border-slate-200 bg-slate-50 p-4 text-sm text-slate-500"
+        >
+          @if (activeTab === 'posts') {
+            You have not posted yet.
+          } @else {
+            You have no saved posts yet.
+          }
+        </p>
+      </div>
+    }
+
+    @if (displayedPosts.length > 0) {
+      @for (post of displayedPosts; track post._id; let i = $index) {
+        <div class="mt-4 w-full bg-white rounded-[16px] shadow-sm border border-slate-200 p-4 mb-4">
+          <!-- ================= POST HEADER ================= -->
+
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <img
+                [src]="post.user.photo"
+                [alt]="post.user.name"
+                class="w-10 h-10 rounded-full object-cover cursor-pointer"
+              />
+
+              <div>
+                <h3
+                  class="text-sm font-bold text-slate-900 cursor-pointer hover:text-blue-600 transition-colors"
+                >
+                  {{ post.user.name }}
+                </h3>
+
+                <div class="flex items-center gap-1 text-xs text-slate-500 mt-0.5">
+                  <span class="cursor-pointer hover:underline"> @{{ post.user.username }} </span>
+
+                  <span>·</span>
+
+                  <span class="cursor-pointer hover:underline">
+                    {{ post.createdAt | timeAgo }}
+                  </span>
+
+                  @if (post.user._id === user?._id) {
+                    <span>·</span>
+
+                    <div class="relative flex items-center gap-1 text-xs text-slate-500">
+                      @if (post.privacy === 'public') {
+                        <i class="fa-solid fa-earth-americas text-[11px]"></i>
+                        <span>Public</span>
+                      }
+
+                      @if (post.privacy === 'following') {
+                        <i class="fa-solid fa-user-group text-[11px]"></i>
+                        <span>Followers</span>
+                      }
+
+                      @if (post.privacy === 'only_me') {
+                        <i class="fa-solid fa-lock text-[11px]"></i>
+                        <span>Only me</span>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+
+            <!-- ================= MORE MENU ================= -->
+
+            <div class="relative">
+              <input type="checkbox" [id]="'profileMoreMenu-' + i" class="peer hidden" />
+
+              <label
+                [for]="'profileMoreMenu-' + i"
+                class="w-9 h-9 flex items-center justify-center cursor-pointer rounded-full hover:bg-slate-100 text-slate-500 transition-colors"
+              >
+                <i class="fa-solid fa-ellipsis"></i>
+              </label>
+
+              <label
+                [for]="'profileMoreMenu-' + i"
+                class="fixed inset-0 z-40 hidden peer-checked:block cursor-default"
+              ></label>
+
+              <div
+                class="absolute right-0 top-11 z-50 w-48 rounded-xl border border-slate-200 bg-white p-2 shadow-xl invisible opacity-0 pointer-events-none -translate-y-1 peer-checked:visible peer-checked:opacity-100 peer-checked:pointer-events-auto peer-checked:translate-y-0 transition-all duration-150"
+              >
+                <!-- Copy Link -->
+
+                <button
+                  type="button"
+                  class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-slate-700 hover:bg-slate-50 cursor-pointer"
+                >
+                  <i class="fa-regular fa-copy w-4 text-center"></i>
+
+                  <span>Copy link</span>
+                </button>
+
+                <!-- Save -->
+
+                <!-- Save / Unsave -->
+
+                <button
+                  type="button"
+                  (click)="bookmarkUnbookmarkPost(post)"
+                  class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm hover:bg-slate-50 cursor-pointer"
+                  [class.text-blue-600]="post.bookmarked"
+                  [class.text-slate-700]="!post.bookmarked"
+                >
+                  <i
+                    class="fa-bookmark w-4 text-center"
+                    [class.fa-solid]="post.bookmarked"
+                    [class.fa-regular]="!post.bookmarked"
+                  ></i>
+
+                  <span>
+                    {{ post.bookmarked ? 'Unsave Post' : 'Save Post' }}
+                  </span>
+                </button>
+
+                @if (post.user._id === user?._id) {
+                  <!-- Edit -->
+
+                  <button
+                    type="button"
+                    (click)="startEditPost(post)"
+                    class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-slate-700 hover:bg-slate-50 cursor-pointer"
+                  >
+                    <i class="fa-solid fa-pencil w-4 text-center"></i>
+
+                    <span>Edit post</span>
+                  </button>
+
+                  <!-- Delete -->
+
+                  <button
+                    type="button"
+                    (click)="deletePostItem(post.id)"
+                    class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-red-600 hover:bg-red-50 cursor-pointer"
+                  >
+                    <i class="fa-regular fa-trash-can w-4 text-center"></i>
+
+                    <span>Delete post</span>
+                  </button>
+                }
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= POST TEXT ================= -->
+
+          @if (post.body) {
+            <p
+              [routerLink]="'/details/' + post.id"
+              class="mt-4 text-slate-800 leading-6 text-[15px] tracking-wide font-normal wrap-break-word cursor-pointer"
+            >
+              {{ post.body }}
+            </p>
+          }
+
+          <!-- ================= POST IMAGE ================= -->
+
+          <div class="mt-4 overflow-hidden rounded-xl">
+            @if (post.image) {
+              <img
+                [routerLink]="'/details/' + post.id"
+                [src]="post.image"
+                alt="Post photo"
+                class="w-full cursor-pointer max-h-90 object-cover transition-transform duration-700 hover:scale-[1.08]"
+              />
+            }
+          </div>
+
+          <!-- ================= POST INFO ================= -->
+
+          <div class="mt-4 flex items-center justify-between text-xs text-slate-500">
+            <div class="flex items-center gap-1.5">
+              <span
+                class="w-5 h-5 bg-blue-500 text-white rounded-full flex items-center justify-center"
+              >
+                <i class="fa-solid fa-thumbs-up text-[9px]"></i>
+              </span>
+
+              <span> {{ post.likesCount }} likes </span>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <span class="cursor-pointer hover:underline">
+                {{ post.commentsCount }} comments
+              </span>
+
+              <span class="cursor-pointer hover:underline"> {{ post.sharesCount }} shares </span>
+            </div>
+          </div>
+
+          <!-- ================= POST ACTIONS ================= -->
+
+          <div class="mt-3 pt-3 border-t border-slate-200 grid grid-cols-3 gap-2">
+            <!-- LIKE -->
+
+            <button
+              type="button"
+              (click)="likeUnlikePost(post)"
+              [class.text-blue-600]="post.likes.includes(user?._id ?? '')"
+              [class.text-slate-600]="!post.likes.includes(user?._id ?? '')"
+              class="flex cursor-pointer items-center justify-center gap-2 py-2 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-colors"
+            >
+              <i
+                class="fa-thumbs-up"
+                [class.fa-solid]="post.likes.includes(user?._id ?? '')"
+                [class.fa-regular]="!post.likes.includes(user?._id ?? '')"
+              ></i>
+
+              Like
+            </button>
+
+            <!-- COMMENT -->
+
+            <button
+              #commentBtn
+              type="button"
+              class="flex cursor-pointer items-center justify-center gap-2 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-blue-600 transition-colors"
+            >
+              <i class="fa-regular fa-comment"></i>
+
+              Comment
+            </button>
+
+            <!-- SHARE -->
+
+            <button
+              type="button"
+              class="flex cursor-pointer items-center justify-center gap-2 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-blue-600 transition-colors"
+            >
+              <i class="fa-solid fa-share"></i>
+
+              Share
+            </button>
+          </div>
+
+          <!-- ================= COMMENTS ================= -->
+
+          @defer (on interaction(commentBtn)) {
+            <app-post-comments [postId]="post.id" />
+          }
+
+          <!-- ================= EDIT POST ================= -->
+
+          @if (editingPostId === post.id) {
+            <div
+              (click)="cancelEditPost()"
+              class="fixed inset-0 z-100 flex items-center justify-center bg-black/60 px-4"
+            >
+              <div
+                (click)="$event.stopPropagation()"
+                class="w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white shadow-2xl"
+              >
+                <!-- HEADER -->
+
+                <div
+                  class="relative flex items-center justify-center border-b border-slate-200 px-5 py-4"
+                >
+                  <h2 class="text-xl font-bold text-slate-900">Edit post</h2>
+
+                  <button
+                    type="button"
+                    (click)="cancelEditPost()"
+                    class="absolute right-4 top-1/2 -translate-y-1/2 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  >
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                  </button>
+                </div>
+
+                <!-- CONTENT -->
+
+                <div class="p-5">
+                  <div class="flex items-center gap-3">
+                    <img
+                      [src]="post.user.photo"
+                      [alt]="post.user.name"
+                      class="h-11 w-11 rounded-full object-cover"
+                    />
+
+                    <div>
+                      <h3 class="text-sm font-bold text-slate-900">
+                        {{ post.user.name }}
+                      </h3>
+
+                      <div
+                        class="mt-1 flex w-fit items-center gap-1 rounded-md bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-600"
+                      >
+                        @if (post.privacy === 'public') {
+                          <i class="fa-solid fa-earth-americas"></i>
+                          <span>Public</span>
+                        }
+
+                        @if (post.privacy === 'following') {
+                          <i class="fa-solid fa-user-group"></i>
+                          <span>Followers</span>
+                        }
+
+                        @if (post.privacy === 'only_me') {
+                          <i class="fa-solid fa-lock"></i>
+                          <span>Only me</span>
+                        }
+                      </div>
+                    </div>
+                  </div>
+
+                  <textarea
+                    [formControl]="editContentControl"
+                    placeholder="What's on your mind?"
+                    class="mt-5 min-h-35 w-full resize-none border-0 bg-transparent text-lg text-slate-800 outline-none placeholder:text-slate-400 focus:ring-0"
+                  ></textarea>
+
+                  @if (editImgUrl) {
+                    <div class="relative mt-3 overflow-hidden rounded-xl border border-slate-200">
+                      <img
+                        [src]="editImgUrl"
+                        alt="Post image"
+                        class="max-h-80 w-full object-cover"
+                      />
+
+                      @if (editSelectedFile) {
+                        <button
+                          type="button"
+                          (click)="removeEditFile()"
+                          class="absolute right-3 top-3 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-black/60 text-white hover:bg-black/80"
+                        >
+                          <i class="fa-solid fa-xmark"></i>
+                        </button>
+                      }
+                    </div>
+                  }
+
+                  <div
+                    class="mt-5 flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3"
+                  >
+                    <span class="text-sm font-bold text-slate-800"> Add to your post </span>
+
+                    <div class="flex items-center gap-4">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        [id]="'profile-edit-image-' + post.id"
+                        class="hidden"
+                        (change)="changeEditFile($event)"
+                      />
+
+                      <label
+                        [for]="'profile-edit-image-' + post.id"
+                        class="cursor-pointer text-xl text-green-500 transition hover:scale-110"
+                      >
+                        <i class="fa-regular fa-image"></i>
+                      </label>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    (click)="updatePostItem(post.id)"
+                    class="mt-4 w-full cursor-pointer rounded-lg bg-blue-600 py-2.5 text-sm font-bold text-white hover:bg-blue-700"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    }
+    <!-- ******************************************************* -->
+
+    <!-- Comments & create comment -->
+    <!-- @defer (on interaction(commentBtn)) {
+      <app-post-comments [postId]="post.id" />
+    } -->
+  </div>
+</div>
